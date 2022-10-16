@@ -6,7 +6,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.boot.web.servlet.support.SpringBootServletInitializer;
 import org.springframework.cache.annotation.EnableCaching;
-//使用springBoot微服务框架
+//使用springBoot微服务框架,test
 //@ComponentScan(basePackages = {"com.corp.jr.dao.generator",})
 @MapperScan("com.corp.jr.dao.generator")
 @SpringBootApplication
