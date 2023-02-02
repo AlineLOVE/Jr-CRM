@@ -5,20 +5,19 @@ package com.corp.jr.web.query;
  * @author xiajr
  */
 public class PageParam {
-    private Integer page = null;//页码
-    private Integer limit = null;//每页数据条数
+    private Integer pageNum = 1;//页码,
+    private Integer limit = 3;//每页数据条数
     private Integer pageSize=0;
 
-    public Integer getPage() {
-        return page;
+    public Integer getPageNum() {
+        return pageNum;
     }
 
-    public void setPage(Integer page) {
-        this.page = page;
+    public void setPageNum(Integer pageNum) {
+        this.pageNum = pageNum;
     }
 
-
-	public Integer getLimit() {
+    public Integer getLimit() {
 		return limit;
 	}
 
