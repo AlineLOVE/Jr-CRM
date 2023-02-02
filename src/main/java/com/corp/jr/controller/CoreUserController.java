@@ -51,7 +51,10 @@ public class CoreUserController {
     public JsonResult<List<CoreUser>> queryUsersMessage(@RequestBody UserQuery condition) {
         List pageResult = coreUserService.queryUsersMessage(condition);
         ListPageUtil listPageUtil = new ListPageUtil(pageResult);
-        int pageNum = condition.getPage();//页码
+        int pageNum = condition.getPageNum();//页码
+        if(listPageUtil.getPageCount()<pageNum){
+            return JsonResult.failMessage("超出最大页码!最大页码为："+listPageUtil.getPageCount());
+        }
         listPageUtil.setIndex(pageNum);
         List<CoreUser> list = listPageUtil.nextPage();//设置好pageNum后，获取第pageNum页
         return JsonResult.success(list, pageResult.size());

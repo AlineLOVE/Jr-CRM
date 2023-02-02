@@ -14,9 +14,9 @@ import java.util.concurrent.CopyOnWriteArrayList;
  */
 public final class ListPageUtil<T> {
     private CopyOnWriteArrayList<T> list;
-    private int pageSize = 6;//每页数 默认6
+    private int pageSize = 3;//每页数 默认3
     private int pageCount = 0;//一共多少页
-    private int listSize = 0;//总页数
+    private int listSize = 0;//总条数
     private int index = 0;
 
     public void setPageSize(int pageSize) {
@@ -51,7 +51,7 @@ public final class ListPageUtil<T> {
      * [详细描述]:<br/>
      *
      * @param list     : 待分页的数据集
-     * @param  : 每页数 默认6
+     * @param  : 每页数 默认3
      * @return
      **/
     public ListPageUtil(List<T> list) {
