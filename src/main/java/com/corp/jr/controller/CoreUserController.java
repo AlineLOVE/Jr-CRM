@@ -6,7 +6,11 @@ import com.corp.jr.util.ResultUtil;
 import com.corp.jr.util.page.ListPageUtil;
 import com.corp.jr.web.JsonResult;
 import com.corp.jr.web.query.UserQuery;
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import io.netty.util.internal.StringUtil;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
@@ -23,6 +27,7 @@ import java.util.Map;
 @RestController
 @RequestMapping("/coreuser")
 public class CoreUserController {
+    private Logger log = LoggerFactory.getLogger(LoginController.class);
     @Autowired
     CoreUserService coreUserService;
 
@@ -34,6 +39,7 @@ public class CoreUserController {
      */
     @GetMapping("/getuser")
     public Map getUser(int id) {
+        log.info("获取用户信息");
         Map map = new HashMap();
         map.put("code", "0");
         CoreUser user = coreUserService.selectByPrimaryKey(id);
@@ -49,15 +55,21 @@ public class CoreUserController {
      */
     @PostMapping("/getusers")
     public JsonResult<List<CoreUser>> queryUsersMessage(@RequestBody UserQuery condition) {
+        log.info("获取用户列表");
+        PageHelper.startPage(condition.getPageNum(),condition.getPageSize(),true);//注意：只有紧跟着PageHelper.startPage()的sql语句才被pagehelper起作用
         List pageResult = coreUserService.queryUsersMessage(condition);
-        ListPageUtil listPageUtil = new ListPageUtil(pageResult);
-        int pageNum = condition.getPageNum();//页码
+
+    /*    ListPageUtil listPageUtil = new ListPageUtil(pageResult);
+       int pageNum = condition.getPageNum();//页码
         if(listPageUtil.getPageCount()<pageNum){
             return JsonResult.failMessage("超出最大页码!最大页码为："+listPageUtil.getPageCount());
         }
         listPageUtil.setIndex(pageNum);
         List<CoreUser> list = listPageUtil.nextPage();//设置好pageNum后，获取第pageNum页
-        return JsonResult.success(list, pageResult.size());
+        return JsonResult.success(list, pageResult.size());*/
+
+        PageInfo pageInfo = new PageInfo(pageResult);
+        return JsonResult.success(pageInfo.getList(), (int) pageInfo.getTotal());
     }
 
     /**

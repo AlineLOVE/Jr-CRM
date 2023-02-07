@@ -6,6 +6,8 @@ import com.corp.jr.util.ResultUtil;
 import com.corp.jr.util.page.ListPageUtil;
 import com.corp.jr.web.JsonResult;
 import com.corp.jr.web.query.UserQuery;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -20,6 +22,7 @@ import java.util.Map;
 @RestController
 @RequestMapping("/login")
 public class LoginController {
+    private Logger log = LoggerFactory.getLogger(LoginController.class);
     @Autowired
     CoreUserService coreUserService;
 
