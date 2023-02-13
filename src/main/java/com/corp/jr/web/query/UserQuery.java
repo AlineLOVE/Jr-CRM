@@ -4,12 +4,10 @@ package com.corp.jr.web.query;
 import com.corp.jr.annotation.Query;
 import com.corp.jr.util.Tool;
 import com.corp.jr.util.enums.CoreDictType;
-import com.corp.jr.util.page.MfsyPagination;
 import com.github.pagehelper.PageInfo;
 import org.springframework.util.StringUtils;
 
 import java.util.Date;
-import java.util.List;
 
 /*public class UserQuery extends PageParam{*/
 public class UserQuery extends PageInfo{
