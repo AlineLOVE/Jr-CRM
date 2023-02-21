@@ -2,6 +2,7 @@ package com.corp.jr.util.redis;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.*;
+import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -10,7 +11,7 @@ import java.util.concurrent.TimeUnit;
 /**
  * Created by Administrator on 2023/2/8.
  */
-@Service
+@Component
 public class RedisUtils {
 
     @Autowired
@@ -88,7 +89,7 @@ public class RedisUtils {
             ValueOperations<String, Object> operations = redisTemplate.opsForValue();
             operations.set(key, value);
             redisTemplate.expire(key, expireTime, TimeUnit.SECONDS);
-            
+
             result = true;
         } catch (Exception e) {
             e.printStackTrace();
