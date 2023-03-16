@@ -109,11 +109,12 @@ public class ReadWriteLock {
         RSemaphore park = redisson.getSemaphore("park");
         log.info("go可用许可证的数量1:"+park.availablePermits());
         log.info("go尝试获取当前可用的许可证:"+park.tryAcquire());
-        if(p>0){
-            park.release(p);
-        }else {
-            park.release();  //释放一个信号量（redis中信号量值+1）
-        }
+        park.trySetPermits(p);//尝试设置许可证数量。
+//        if(p>0){
+//            park.release(p);////释放信号量
+//        }else {
+//            park.release();  //释放一个信号量（redis中信号量值+1）
+//        }
         log.info("go可用许可证的数量2:"+park.availablePermits());
         log.info("go尝试获取当前可用的许可证:"+park.tryAcquire());
         return "ok";
@@ -151,6 +152,20 @@ public class ReadWriteLock {
         Thread.sleep(2000);//等待两秒
         log.info("lodkDoor当前计数:"+lockDoor.getCount());
         return id+"完成";
+    }
+    /**
+     * 分布式锁
+     */
+    @ResponseBody
+    @GetMapping("/sentx/lock")
+    public String sentxLock() {
+        //通过java代码实现SETNX同时设置过期时间
+//key--键   value--值  time--过期时间  TimeUnit--时间单位枚举
+        //stringRedisTemplate.opsForValue().setIfAbsent(key, value , time, TimeUnit);
+
+//        redisTemplate.opsForValue().setIfAbsent()
+
+        return "";
     }
 
 }
