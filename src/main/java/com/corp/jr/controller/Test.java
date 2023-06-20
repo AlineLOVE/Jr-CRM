@@ -16,7 +16,7 @@ public class Test {
         String bVersion = SpringBootVersion.getVersion();
         System.out.println("SpringBoot 版本号：" + bVersion);
         List list = new ArrayList<>();
-        list.add(0);
+        list.add(0000);
         list.add("1");
         list.add("2");
         list.add("a");
