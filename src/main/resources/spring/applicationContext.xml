@@ -1,0 +1,131 @@
+<!--<?xml version="1.0" encoding="UTF-8"?>-->
+<!--<beans xmlns="http://www.springframework.org/schema/beans"-->
+       <!--xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:context="http://www.springframework.org/schema/context"-->
+       <!--xmlns:jdbc="http://www.springframework.org/schema/jdbc" xmlns:jee="http://www.springframework.org/schema/jee"-->
+       <!--xmlns:tx="http://www.springframework.org/schema/tx" xmlns:aop="http://www.springframework.org/schema/aop" xmlns:task="http://www.springframework.org/schema/task"-->
+       <!--xsi:schemaLocation="-->
+		<!--http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd-->
+		<!--http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd-->
+		<!--http://www.springframework.org/schema/jdbc http://www.springframework.org/schema/jdbc/spring-jdbc.xsd-->
+		<!--http://www.springframework.org/schema/jee http://www.springframework.org/schema/jee/spring-jee.xsd-->
+		<!--http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd-->
+		<!--http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd-->
+		<!--http://www.springframework.org/schema/task http://www.springframework.org/schema/task/spring-task.xsd"-->
+       <!--default-lazy-init="true">-->
+<!--&lt;!&ndash; 是用于激活那些已经在spring容器里注册过的bean上面的注解，也就是显示的向Spring注册 &ndash;&gt;-->
+<!--<context:annotation-config />-->
+
+<!--&lt;!&ndash; 扫描service、dao &ndash;&gt;-->
+<!--&lt;!&ndash;<context:component-scan base-package="com.corp.jr.dao.generator" />&ndash;&gt;-->
+
+<!--&lt;!&ndash; 配置数据库连接池 &ndash;&gt;-->
+<!--&lt;!&ndash;<context:property-placeholder location="classpath:jdbc.properties" ignore-unresolvable="true"/>&ndash;&gt;-->
+
+<!--&lt;!&ndash; base dataSource &ndash;&gt;-->
+<!--<bean name="baseDataSource" class="com.alibaba.druid.pool.DruidDataSource" init-method="init"-->
+      <!--destroy-method="close">-->
+    <!--&lt;!&ndash; 配置初始化大小、最小、最大 &ndash;&gt;-->
+    <!--<property name="initialSize" value="5" />-->
+    <!--<property name="maxActive" value="100" />-->
+    <!--<property name="minIdle" value="10" />-->
+    <!--&lt;!&ndash; 配置获取连接等待超时的时间 &ndash;&gt;-->
+    <!--<property name="maxWait" value="60000" />-->
+    <!--&lt;!&ndash; 验证连接有效与否的SQL，不同的数据配置不同 &ndash;&gt;-->
+    <!--<property name="validationQuery" value="SELECT 'x'" />-->
+    <!--&lt;!&ndash; 这里建议配置为TRUE，防止取到的连接不可用 &ndash;&gt;-->
+    <!--<property name="testOnBorrow" value="true" />-->
+    <!--<property name="testOnReturn" value="true" />-->
+    <!--<property name="testWhileIdle" value="true" />-->
+    <!--&lt;!&ndash; 配置间隔多久才进行一次检测，检测需要关闭的空闲连接，单位是毫秒 &ndash;&gt;-->
+    <!--<property name="timeBetweenEvictionRunsMillis" value="60000" />-->
+    <!--&lt;!&ndash; 配置一个连接在池中最小生存的时间，单位是毫秒 &ndash;&gt;-->
+    <!--<property name="minEvictableIdleTimeMillis" value="300000" />-->
+    <!--&lt;!&ndash; 超过时间限制是否回收 &ndash;&gt;-->
+    <!--<property name="removeAbandoned" value="true" />-->
+    <!--&lt;!&ndash; 超时时间；单位为秒。180秒=3分钟 &ndash;&gt;-->
+    <!--<property name="removeAbandonedTimeout" value="1800" />-->
+
+    <!--<property name="logAbandoned" value="true" />-->
+    <!--<property name="filters" value="mergeStat" />-->
+<!--</bean>-->
+
+<!--&lt;!&ndash;   数据库链接地址 &ndash;&gt;-->
+<!--<bean name="master-dataSource" parent="baseDataSource" init-method="init">-->
+    <!--<property name="url" value="${db.datasource.url}" />-->
+    <!--<property name="username" value="${db.datasource.username}" />-->
+    <!--<property name="password" value="${db.datasource.password}" />-->
+    <!--<property name="driverClassName" value="${db.datasource.driver-class-name}" />-->
+<!--</bean>-->
+
+<!--&lt;!&ndash;-->
+
+<!--&lt;!&ndash; spring整合mybatis （mybatis-spring项目提供整合类） &ndash;&gt;-->
+<!--<bean id="sqlSessionFactory" class="com.baomidou.mybatisplus.spring.MybatisSqlSessionFactoryBean">-->
+    <!--&lt;!&ndash; 配置数据源 &ndash;&gt;-->
+    <!--<property name="dataSource" ref="master-dataSource"></property>-->
+    <!--&lt;!&ndash; 指定mybatis配置文件 &ndash;&gt;-->
+    <!--<property name="configLocation" value="classpath:mybatis-config.xml"></property>-->
+    <!--&lt;!&ndash; typeAliasesPackage：支持通配符扫描路径  对应的实体路径&ndash;&gt;-->
+    <!--<property name="typeAliasesPackage" value="com.*.entity" />-->
+    <!--&lt;!&ndash; classpath：默认的resources路径  对应的xml文件路径&ndash;&gt;-->
+    <!--<property name="mapperLocations">-->
+        <!--<list>-->
+            <!--<value>classpath*:mapper/*/*.xml</value>-->
+        <!--</list>-->
+    <!--</property>-->
+    <!--&lt;!&ndash;注入全局mybatis策略配置   在下面配置了globalConfig&ndash;&gt;-->
+    <!--<property name="globalConfig" ref="globalConfig" />-->
+<!--</bean>-->
+
+<!--&lt;!&ndash; MyBatis 动态实现 &ndash;&gt;-->
+<!--<bean id="mapperScannerConfigurer" class="org.mybatis.spring.mapper.MapperScannerConfigurer">-->
+    <!--&lt;!&ndash; 对Dao 接口动态实现，需要知道接口在哪 &ndash;&gt;-->
+    <!--<property name="basePackage" value="com.*.dao" />-->
+<!--</bean>-->
+
+<!--&lt;!&ndash; 定义 MP 全局策略 &ndash;&gt;-->
+<!--<bean id="globalConfig" class="com.baomidou.mybatisplus.entity.GlobalConfiguration">-->
+    <!--&lt;!&ndash; 逻辑删除 定义下面3个参数&ndash;&gt;-->
+    <!--&lt;!&ndash;  <property name="sqlInjector" ref="logicSqlInjector" />-->
+     <!--<property name="logicDeleteValue" value="-1" />-->
+     <!--<property name="logicNotDeleteValue" value="1" /> &ndash;&gt;-->
+    <!--&lt;!&ndash; 全局ID类型： 0, "数据库ID自增"， 1, "用户输入ID", 2, "全局唯一ID", 3, "全局唯一ID"&ndash;&gt;-->
+    <!--<property name="idType" value="0" />-->
+    <!--<property name="dbColumnUnderline" value="false" />-->
+
+<!--</bean>-->
+
+<!--&lt;!&ndash; 事务管理 &ndash;&gt;-->
+<!--<bean id="transactionManager"-->
+      <!--class="org.springframework.jdbc.datasource.DataSourceTransactionManager">-->
+    <!--<property name="dataSource" ref="master-dataSource"></property>-->
+<!--</bean>-->
+
+<!--&lt;!&ndash; 事务管理 属性 &ndash;&gt;-->
+<!--<tx:advice id="transactionAdvice" transaction-manager="transactionManager" >-->
+    <!--<tx:attributes>-->
+        <!--&lt;!&ndash;7种事务配置-->
+            <!--REQUIRED：支持当前事务，如果当前没有事务，就新建一个事务。这是最常见的选择。-->
+             <!--SUPPORTS：支持当前事务，如果当前没有事务，就以非事务方式执行。-->
+            <!--MANDATORY：支持当前事务，如果当前没有事务，就抛出异常。-->
+            <!--REQUIRES_NEW：新建事务，如果当前存在事务，把当前事务挂起。-->
+            <!--NOT_SUPPORTED：以非事务方式执行操作，如果当前存在事务，就把当前事务挂起。-->
+            <!--NEVER：以非事务方式执行，如果当前存在事务，则抛出异常。-->
+            <!--NESTED：支持当前事务，如果当前事务存在，则执行一个嵌套事务，如果当前没有事务，就新建一个事务 &ndash;&gt;-->
+        <!--<tx:method name="update*" propagation="REQUIRED"/>-->
+        <!--<tx:method name="insert*" propagation="REQUIRED"/>-->
+        <!--<tx:method name="delete*" propagation="REQUIRED"/>-->
+        <!--<tx:method name="select*" propagation="REQUIRED" read-only="true"/>-->
+    <!--</tx:attributes>-->
+<!--</tx:advice>-->
+
+<!--&lt;!&ndash; AOP配置切面 &ndash;&gt;-->
+<!--<aop:config proxy-target-class="true">-->
+    <!--<aop:advisor advice-ref="transactionAdvice"-->
+                 <!--pointcut="execution(* *.service..*.*(..))" />-->
+<!--</aop:config>-->
+<!--<aop:aspectj-autoproxy proxy-target-class="true" />-->
+
+<!--&ndash;&gt;-->
+
+<!--</beans>-->

@@ -3,13 +3,13 @@
 <configuration status="OFF">
     <properties>
         <!-- 当前日志文件路径 -->
-        <!--<property name="fileSavePath" value="/home/logs/sweep/sweep(${hostName}).log"/>-->
-        <!-- <property name="errorFileSavePath" value="/home/logs/sweep/sweep(${hostName})-error.log"/>  -->
-        <property name="infofileSavePath" value="D:\myworkspace\logs\info.log"/>
-        <property name="errorFileSavePath" value="D:\myworkspace\logs\error.log"/>
+        <property name="fileSavePath" value="/home/logs/sweep/sweep(${hostName}).log"/>
+         <property name="errorFileSavePath" value="/home/logs/sweep/sweep(${hostName})-error.log"/>
+      <!--  <property name="infofileSavePath" value="D:\myworkspace\logs\info.log"/>
+        <property name="errorFileSavePath" value="D:\myworkspace\logs\error.log"/>-->
         <!-- 历史日志文件路径 -->
-        <!--<property name="fileBackSavePath" value="/home/backlogs/sweep"/>-->
-        <property name="fileBackSavePath" value="D:\myworkspace\logs\logs"/>
+        <property name="fileBackSavePath" value="/home/backlogs/sweep"/>
+       <!-- <property name="fileBackSavePath" value="D:\myworkspace\logs\logs"/>-->
         <!-- 日志级别 -->
         <property name="logLevel" value="debug"/>
         <property name="layoutPattern"
